@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Apoie o Projeto - Crônicas Estelares</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Apoie o projeto Crônicas Estelares e ajude a manter e criar novas ferramentas gratuitas para criadores de conteúdo.">
+
+    <!-- FAVICON (ÍCONE DA ABA DO NAVEGADOR) -->
+    <link rel="icon" href="https://raw.githubusercontent.com/marcosbernardo2802/portal/main/images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/marcosbernardo2802/portal/main/images/favicon.png">
+
+    <!-- Importando a fonte temática do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ---- VARIÁVEIS DE TEMA (SINCRONIZADAS COM O PORTAL) ---- */
+        :root {
+            /* Tema Escuro (Padrão) */
+            --color-bg: #0a0f18;
+            --color-text: #e0e0e0;
+            --color-primary: #00f2fe;
+            --color-card-bg: #101a2d;
+            --color-card-border: #223354;
+            --color-shadow: rgba(0, 242, 254, 0.2);
+            --font-main: 'Exo 2', sans-serif;
+        }
+
+        body.light-theme {
+            /* Tema Claro */
+            --color-bg: #f4f7f9;
+            --color-text: #333333;
+            --color-primary: #005fbd;
+            --color-card-bg: #ffffff;
+            --color-card-border: #d1d9e0;
+            --color-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* ---- ESTILOS GERAIS E RESET ---- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ---- CABEÇALHO SIMPLES ---- */
+        .site-header {
+            padding: 1.5rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--color-card-border);
+        }
+
+        .site-header a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .site-header a:hover {
+            text-shadow: 0 0 8px var(--color-shadow);
+        }
+        
+        /* ---- BOTÕES FLUTUANTES ---- */
+        .theme-switcher, .back-to-top {
+            position: fixed;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 50%;
+            width: 40px; 
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .theme-switcher:hover, .back-to-top:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px var(--color-shadow);
+        }
+        
+        .theme-switcher {
+            top: 20px;
+        }
+
+        .back-to-top {
+            bottom: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-switcher svg, .back-to-top svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--color-primary);
+        }
+        .light-theme #theme-icon-dark,
+        body:not(.light-theme) #theme-icon-light {
+            display: none;
+        }
+
+        /* ---- CONTEÚDO DA PÁGINA DE DOAÇÃO ---- */
+        .donation-content {
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .donation-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .donation-content .subtitle {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            color: var(--color-text);
+            opacity: 0.9;
+        }
+        
+        .donation-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .light-theme .donation-card {
+             box-shadow: 0 8px 25px var(--color-shadow);
+        }
+        
+        .donation-card h2 {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .qr-code-img {
+            width: 200px;
+            height: 200px;
+            margin: 1rem auto;
+            border-radius: 8px;
+            border: none;
+        }
+
+        .pix-key-wrapper {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pix-key-display {
+            background-color: var(--color-bg);
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--color-text);
+            word-break: break-all;
+            border: 1px solid var(--color-card-border);
+        }
+
+        .copy-button {
+            background-color: var(--color-primary);
+            color: var(--color-bg);
+            border: none;
+            padding: 12px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        
+        .light-theme .copy-button {
+            color: #fff;
+        }
+
+        .copy-button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .copy-message {
+            margin-top: 1rem;
+            height: 20px;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+        
+        /* ---- SECÇÃO PESSOAL ---- */
+        .creator-bio {
+            text-align: left;
+            margin-top: 3rem;
+            padding: 2rem;
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .creator-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--color-primary);
+            flex-shrink: 0;
+            background-color: var(--color-bg);
+        }
+        .creator-text {
+            font-style: italic;
+            font-size: 1.1em;
+        }
+        .creator-text strong {
+            font-style: normal;
+        }
+
+        .alternative-support {
+            margin-top: 3rem;
+        }
+
+        /* ---- RODAPÉ ---- */
+        footer {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-card-border);
+            color: #888;
+            transition: border-color 0.3s ease;
+        }
+
+        .footer-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-link, .email-link {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .footer-link:hover, .email-link:hover {
+            color: var(--color-primary);
+            text-shadow: 0 0 8px var(--color-shadow);
+        }
+        .footer-link:hover span, .email-link:hover span {
+             text-decoration: underline;
+        }
+        .youtube-icon {
+            width: 28px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .email-link svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--color-primary);
+            transition: fill 0.3s;
+        }
+
+        .copyright-text {
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        /* ---- RESPONSIVIDADE ---- */
+        @media (max-width: 768px) {
+            .donation-content h1 { font-size: 2.2rem; }
+            .donation-content .subtitle { font-size: 1.1rem; }
+            .creator-bio {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+    </style>
+</head>
+<body id="top">
+
+    <!-- BOTÃO PARA TROCAR O TEMA -->
+    <div id="theme-toggle" class="theme-switcher" title="Alternar tema">
+        <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13.14C20.97,13.14 20.3,13.42 19.82,13.9C19.34,14.38 19.06,15.05 19.06,15.72C19.06,16.39 19.34,17.06 19.82,17.54C20.3,18.02 20.97,18.3 21.64,18.3C22.31,18.3 22.98,18.02 23.46,17.54C23.94,17.06 24.22,16.39 24.22,15.72C24.22,15.05 23.94,14.38 23.46,13.9C22.98,13.42 22.31,13.14 21.64,13.14Z M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22C15.93,22 19.33,19.79 20.94,16.63C17.9,17.56 14.62,16.4 12.5,13.82C10.38,11.24 10.45,7.87 12.68,5.3C11.39,4.28 9.81,3.75 8.12,4.05C5.91,4.5 4.05,6.17 3.34,8.36C2.63,10.55 3.19,12.94 4.83,14.57C6.47,16.21 8.85,16.78 11.05,16.07C11.33,16 11.62,15.95 11.9,15.9C11.53,15.33 11.25,14.68 11.09,14C10.23,10.82 11.7,7.5 14.5,5.8C15.45,5.23 16.5,4.96 17.55,5C17.84,2.92 15.15,2 12,2Z"/></svg>
+        <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5V2.5H11V4.5H12M18.6,6.5L19.8,5.3L18.4,3.9L17.2,5.1L18.6,6.5M20.5,11H22.5V12H20.5V11M17.2,18.9L18.4,20.1L19.8,18.7L18.6,17.5L17.2,18.9M12,20.5V22.5H13V20.5H12M5.4,17.5L4.2,18.7L2.8,17.3L4,16.1L5.4,17.5M3.5,12H1.5V11H3.5V12M6.8,5.1L5.6,3.9L4.2,5.3L5.4,6.5L6.8,5.1Z"/></svg>
+    </div>
+
+    <header class="site-header">
+        <a href="https://cronicasestelares.vercel.app/">← Voltar ao Portal Crônicas Estelares</a>
+    </header>
+
+    <main class="container donation-content">
+        <h1>Apoie o Projeto</h1>
+        <p class="subtitle">
+            Se nossas ferramentas gratuitas ajudam você em sua jornada de criação, considere fazer uma doação. Seu apoio é o combustível que nos permite manter os sistemas funcionando e desenvolver novas soluções para nossa comunidade.
+        </p>
+
+        <div class="donation-card">
+            <h2>Doação via Pix</h2>
+            <p>Aponte a câmera do seu celular para o QR Code abaixo:</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020101021126360014br.gov.bcb.pix0114%2B55119124455625204000053039865802BR5925MARCOS%20APARECIDO%20BERNARDO6009SAO%20PAULO622905251JY4PRFZWG3G9KYTW3RF9YZJ16304E7F5" alt="QR Code Pix para Doação" class="qr-code-img">
+            
+            <p>Ou use a chave Copia e Cola:</p>
+            <div class="pix-key-wrapper">
+                <span id="pixKey" class="pix-key-display">000201...6304E7F5</span>
+                <button class="copy-button" onclick="copyPixKey()">Copiar Chave</button>
+            </div>
+            <div id="copyMessage" class="copy-message"></div>
+        </div>
+
+        <div class="creator-bio">
+            <img src="https://raw.githubusercontent.com/marcosbernardo2802/portal/main/images/piclumen-1749495214425.png" alt="Logo do canal Crônicas Estelares" class="creator-avatar">
+            <p class="creator-text"><strong>Comandante Marcos na escuta!</strong> "Enquanto a Nyx Solares explora e narra as nossas histórias de ficção científica, minha missão é desenvolver as ferramentas e os conteúdos sobre ciência que apoiam o nosso canal. Decidi compartilhar o nosso 'arsenal' com outros criadores para fortalecer a comunidade. Seu apoio me ajuda a manter tudo funcionando e a criar ainda mais tecnologia para nossas explorações. Muito obrigado por se juntar à nossa tripulação!"</p>
+        </div>
+
+        <div class="alternative-support">
+            <h2>Outras Formas de Apoio</h2>
+            <p class="subtitle">Não pode doar? Sem problemas! Seu apoio moral é igualmente valioso. Inscreva-se em nosso canal do YouTube e compartilhe as nossas ferramentas. Cada gesto conta!</p>
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="container footer-wrapper">
+            <div class="footer-links">
+                <a href="https://www.youtube.com/@CronicasEstelaress" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <svg class="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 20" aria-hidden="true">
+                        <rect width="28" height="20" rx="4" fill="#FF0000"/>
+                        <path d="M11,14 L18,10 L11,6 V14 Z" fill="#FFFFFF"/>
+                    </svg>
+                    <span>Acesse nosso canal no YouTube</span>
+                </a>
+                <a href="mailto:cronicasestelares.oficial@gmail.com" target="_blank" rel="noopener noreferrer" class="email-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>cronicasestelares.oficial@gmail.com</span>
+                </a>
+            </div>
+            <p class="copyright-text">&copy; <span id="current-year"></span> Crônicas Estelares. Todos os sistemas operacionais.</p>
+        </div>
+    </footer>
+    
+    <!-- BOTÃO VOLTAR AO TOPO -->
+    <a href="#top" class="back-to-top" title="Voltar ao topo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+
+            // Lógica do tema
+            const themeToggleButton = document.getElementById('theme-toggle');
+            const body = document.body;
+            
+            const applyInitialTheme = () => {
+                const storedTheme = localStorage.getItem('theme');
+                if (storedTheme) {
+                    body.classList.toggle('light-theme', storedTheme === 'light');
+                } else {
+                    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+                    body.classList.toggle('light-theme', prefersLight);
+                }
+            };
+            applyInitialTheme();
+            themeToggleButton.addEventListener('click', () => {
+                const isLight = body.classList.toggle('light-theme');
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            });
+            
+            // Lógica do botão voltar ao topo
+            const backToTopButton = document.querySelector(".back-to-top");
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 300) backToTopButton.classList.add("show");
+                else backToTopButton.classList.remove("show");
+            });
+        });
+
+        // Função para copiar a chave Pix
+        function copyPixKey() {
+            const pixKeyText = "00020101021126360014br.gov.bcb.pix0114+55119124455625204000053039865802BR5925MARCOS APARECIDO BERNARDO6009SAO PAULO622905251JY4PRFZWG3G9KYTW3RF9YZJ16304E7F5";
+            const copyMessage = document.getElementById('copyMessage');
+            
+            navigator.clipboard.writeText(pixKeyText).then(() => {
+                copyMessage.textContent = 'Chave Pix copiada com sucesso!';
+                setTimeout(() => { copyMessage.textContent = ''; }, 3000);
+            }).catch(err => {
+                console.error('Erro ao copiar a chave Pix:', err);
+                copyMessage.textContent = 'Erro ao copiar. Tente manualmente.';
+                setTimeout(() => { copyMessage.textContent = ''; }, 3000);
+            });
+        }
+    </script>
+
+</body>
+</html>
