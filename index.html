@@ -326,6 +326,48 @@
         }
 
     </style>
+    <!-- SCRIPT CAMALEÃO: Integração com a Nave-Mãe -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Verifica se o App foi chamado pela Nave-Mãe (via parâmetro na URL)
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        if (urlParams.get('view') === 'portal') {
+            const style = document.createElement('style');
+            style.innerHTML = `
+                /* 1. ESCONDER ELEMENTOS DESNECESSÁRIOS */
+                /* Adicione aqui as classes específicas do seu banner/menu se necessário */
+                header, footer, nav, .banner, .menu-topo, #theme-toggle, .back-to-top {
+                    display: none !important;
+                }
+
+                /* 2. UNIFICAR O FUNDO COM A NAVE-MÃE */
+                body, html {
+                    background: transparent !important; /* Deixa o fundo do iframe invisível */
+                    background-color: transparent !important;
+                    background-image: none !important;
+                    color: #e2e8f0 !important; /* Texto claro padrão */
+                    margin: 0 !important;
+                }
+
+                /* 3. AJUSTAR ESPAÇAMENTOS (Remover margens do topo que sobraram do banner oculto) */
+                main, .container, #projetos, #root {
+                    padding-top: 10px !important;
+                    margin-top: 0 !important;
+                    box-shadow: none !important;
+                }
+
+                /* 4. ESTILIZAR SCROLLBAR PARA COMBINAR COM O TEMA */
+                ::-webkit-scrollbar { width: 6px; }
+                ::-webkit-scrollbar-track { background: transparent; }
+                ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+                ::-webkit-scrollbar-thumb:hover { background: #00f2fe; }
+            `;
+            document.head.appendChild(style);
+        }
+    });
+</script>
+<!-- FIM DO SCRIPT CAMALEÃO -->
 </head>
 <body id="top">
 
@@ -446,3 +488,4 @@
 
 </body>
 </html>
+
